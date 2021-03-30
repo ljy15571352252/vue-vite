@@ -17,9 +17,9 @@
 <script>
 import { Message } from "element3";
 import { reactive, ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute,useRouter } from "vue-router";
 import { useItem } from "../model/userModel";
-
+import { login } from '/@/api/user'
 export default {
   props: {
     isEdit: {
@@ -29,7 +29,8 @@ export default {
   },
   setup(props) {
     // 路由
-    const route = useRoute();
+    const route = useRoute();  // 获取路由参数
+    const router = useRouter()  // 获取路由跳转方法
     const { model, addUser, updateUser } = useItem(props.isEdit, route.params.id);
     const rules = reactive({
       // 校验规则
@@ -44,9 +45,15 @@ export default {
       form.value.validate((valid) => {
         if (valid) {
           // 提交
+          console.log(model)
+          const obj = {
+            account:model._rawValue.name,
+            password:model._rawValue.age
+          }
           if (props.isEdit) {
-            updateUser().then(() => {
+            login(obj).then(() => {
               // 操作成功提示信息
+              router.back()
               Message.success({
                 title: "操作成功",
                 message: "更新用户数据成功",
@@ -54,7 +61,7 @@ export default {
               });
             });
           } else {
-            addUser().then(() => {
+            login(obj).then(() => {
               // 操作成功提示信息
               Message.success({
                 title: "操作成功",

@@ -8,7 +8,7 @@ const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
   // 当发送跨域请求时携带cookie
   // withCredentials: true,
-  timeout: 5000,
+  timeout: 1000000,
 });
 
 // 请求拦截

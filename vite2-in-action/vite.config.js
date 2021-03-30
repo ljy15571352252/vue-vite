@@ -26,4 +26,12 @@ export default {
     // you need to set i18n resource including paths !
     include: path.resolve(__dirname, './src/locales/**')
   })],
+  server: {
+    host: '0.0.0.0',
+    port: 9000,
+    hot:true,
+    open: true,
+    https: false,
+    proxy: {}
+  },
 };
